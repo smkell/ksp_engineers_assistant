@@ -2,6 +2,11 @@ Feature: Add part command
 
 	Users can add new parts to the database by using the part:add command.
 
+	Background:
+		Given I set the environment variables to:
+		| variable           | value    |
+		| KEA_MONGO_DATABASE | kea-test |
+
 	Scenario: Getting help on the `part add` command
 		When I run `kea part help add`
 		Then the output should contain:

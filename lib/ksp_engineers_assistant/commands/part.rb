@@ -1,4 +1,6 @@
 require 'thor'
+require 'mongo'
+include Mongo
 
 class Part < Thor
 
@@ -24,5 +26,17 @@ class Part < Thor
 		if (options[:type] == "engine" || options[:type] == "fuel tank")
 			$stdout.puts "\tFuel Type: #{options[:fuel_type]}"
 		end
+
+		client = MongoClient.new(options[:mongo_host], options[:mongo_port])
+		db     = client[options[:mongo_database]]
+		coll   = db['parts']
+
+		coll.insert({
+			'_id' => options[:name],
+			'name' => options[:name],
+			'type' => options[:type],
+			'initial_mass' => options[:initial_mass],
+			'final_mass' => options[:final_mass],
+			'fuel_type' => options[:fuel_type]})
 	end
 end
