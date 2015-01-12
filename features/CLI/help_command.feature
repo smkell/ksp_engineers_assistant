@@ -8,7 +8,25 @@ Feature: help command
 			"""
 			KSP Engineer's Assistant commands:
 			"""
-		And the output should contain:
+		And the output should match:
 			"""
-			help [COMMAND]  # Describe available commands or one specific command
+			^.*help\s*\[COMMAND\]\s*# Describe available commands or one specific.*$
+			"""
+
+	Scenario: Help command, displays help menu
+		When I run `kea help`
+		Then the output should contain:
+			"""
+			KSP Engineer's Assistant commands:
+			"""
+		And the output should match:
+			"""
+			^.*help\s*\[COMMAND\]\s*# Describe available commands or one specific.*$
+			"""
+
+	Scenario: Getting help on the help command
+		When I run `kea help help`
+		Then the output should contain:
+			"""
+			Describe available commands or one specific command
 			"""
